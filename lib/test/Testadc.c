@@ -27,3 +27,19 @@
  * Data Registers, ADCH and ADCL. By default, the result is presented
  * right adjusted, but can optionally be presented left adjusted by
  * setting the ADLAR bit in ADMUX.
+ */
+#include "unity.h"
+#include "adc.h"
+
+void test_adc_disable_should_clear_bit_x(void)
+{
+  TEST_ASSERT_EQUAL_HEX8(10, 100);
+}
+
+
+int main(void)
+{
+  UNITY_BEGIN();
+  RUN_TEST(test_adc_disable_should_clear_bit_x);
+  return UNITY_END();
+}
