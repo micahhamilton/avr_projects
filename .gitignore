@@ -1,4 +1,5 @@
 # Object files
+./lib/obj/
 *.o
 *.ko
 *.obj
