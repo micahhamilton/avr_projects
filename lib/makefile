@@ -1,8 +1,8 @@
-CLEANUP = rm -f
-MKDIR = mkdir -p
-TARGET_EXTENSION = out
+#######################################################
+######             Targert Paths                 ######
+#######################################################
 
-PATHU = ../unity/src/
+PATHU = ../unity/
 PATHS = src/
 PATHT = test/
 PATHB = build/
@@ -10,6 +10,10 @@ PATHD = build/depends/
 PATHO = build/objs/
 PATHR = build/results/
 
+
+CLEANUP = rm -f
+MKDIR = mkdir -p
+TARGET_EXTENSION = out
 BUILD_PATHS = $(PATHB) $(PATHD) $(PATHO) $(PATHR)
 
 SRCT = $(wildcard $(PATHT)*.c)
@@ -31,7 +35,7 @@ test: $(BUILD_PATHS) $(RESULTS)
 
 $(PATHR)%.txt: $(PATHB)%.$(TARGET_EXTENSION)
 	-./$< > $@ 2>&1
-#$(PATHD)Test%.d
+
 $(PATHB)Test%.$(TARGET_EXTENSION): $(PATHO)Test%.o $(PATHO)%.o $(PATHU)unity.o
 	$(LINK) -o $@ $^
 
