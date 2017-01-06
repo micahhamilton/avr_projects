@@ -30,16 +30,25 @@
  */
 #include "unity.h"
 #include "adc.h"
+#include "mock_avrio.h"
 
 void test_adc_disable_should_clear_bit_x(void)
 {
   TEST_ASSERT_EQUAL_HEX8(10, 100);
 }
 
+void test_foo_is_assignable(void)
+{
+  TEST_ASSERT_EQUAL_HEX8(0, FOO);
+}
 
 int main(void)
 {
   UNITY_BEGIN();
+  FOO = 0;
   RUN_TEST(test_adc_disable_should_clear_bit_x);
+  RUN_TEST(test_foo_is_assignable);
+  FOO = 1;
+  RUN_TEST(test_foo_is_assignable);
   return UNITY_END();
 }
