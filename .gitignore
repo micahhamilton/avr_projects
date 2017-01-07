@@ -1,5 +1,5 @@
 # Object files
-./lib/obj/
+*/build/
 *.o
 *.ko
 *.obj

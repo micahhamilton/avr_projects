@@ -31,24 +31,28 @@
 #include "unity.h"
 #include "adc.h"
 #include "mock_avrio.h"
+#include "macro.h"
 
-void test_adc_disable_should_clear_bit_x(void)
+void test_adc_enable__should_set__bit(void)
 {
-  TEST_ASSERT_EQUAL_HEX8(10, 100);
+  uint8_t i;
+  clr_byte(ADCSRA);
+  adc_enable;
+  i = (1 << ADEN);
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+  clr_byte(ADCSRA);
+  ADCSRA |= 0x0f;
+  adc_enable;
+  i = 0x0f;
+  i |= (1 << ADEN);
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+
 }
 
-void test_foo_is_assignable(void)
-{
-  TEST_ASSERT_EQUAL_HEX8(0, FOO);
-}
 
 int main(void)
 {
   UNITY_BEGIN();
-  FOO = 0;
-  RUN_TEST(test_adc_disable_should_clear_bit_x);
-  RUN_TEST(test_foo_is_assignable);
-  FOO = 1;
-  RUN_TEST(test_foo_is_assignable);
+  RUN_TEST(test_adc_enable__should_set__bit);
   return UNITY_END();
 }
