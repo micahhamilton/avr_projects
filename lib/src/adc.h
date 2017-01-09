@@ -26,17 +26,31 @@
 #define VBG_READ        0x0E  /* 1.1V (VBG) */
 #define GND_READ        0x0F  /* 0V (GND) */
 
+/* conversion speed for prescaler selection */
+#define ADC_FAST_CONVERSION            0x01
+#define ADC_SLOW_CONVERSION            0x00
+
 /* function like macros */
 #define adc_enable                  (sbit(ADCSRA, ADEN))
 #define adc_disable                 (cbit(ADCSRA, ADEN))
 #define adc_start_conversion        (sbit(ADCSRA, ADSC))
 #define adc_auto_trigger_enable     (sbit(ADCSRA, ADATE))
 #define adc_clear_interrupt_flag    (sbit(ADCSRA, ADIF))   /* write logical 1 to clear */
+#define adc_interrupt_enable        (sbit(ADCSRA, ADIF))
 
 typedef struct ADC_ADC_Config
 {
   uint8_t ref;
 } ADC_Config;
 
+/* adc_prescaler_select:                              *
+ * selects prescaler for fast or slow conversion time *
+ * slow is better for resolution... assumes F_CPU is  *
+ * defined                                            *
+ * choose: ADC_FAST_CONVERSION or ADC_SLOW_CONVERSION *
+ * returns: approx. minimum conversion time in usec.  */
+extern uint8_t adc_prescaler_select(uint8_t convert_spd);
+
 extern uint8_t ADC_initModule (const ADC_Config *config);
+
 #endif

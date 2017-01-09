@@ -92,6 +92,16 @@ void test_adc_clear_interrupt_flag_should_set_bit(void)
   clr_byte(ADCSRA);
 }
 
+void test_adc_interrupt_enable_should_set_bit(void)
+{
+  uint8_t i;
+  clr_byte(ADCSRA);
+  adc_interrupt_enable;
+  i = (1 << ADIE);
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+  clr_byte(ADCSRA);
+}
+
 int main(void)
 {
   UNITY_BEGIN();
@@ -100,5 +110,6 @@ int main(void)
   RUN_TEST(test_adc_start_conversion_should_set_bit);
   RUN_TEST(test_adc_auto_trigger_enable_should_set_bit);
   RUN_TEST(test_adc_clear_interrupt_flag_should_set_bit);
+  RUN_TEST(test_adc_interrupt_enable_should_set_bit);
   return UNITY_END();
 }
