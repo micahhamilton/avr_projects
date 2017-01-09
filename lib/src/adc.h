@@ -27,8 +27,11 @@
 #define GND_READ        0x0F  /* 0V (GND) */
 
 /* function like macros */
-#define adc_enable      (sbit(ADCSRA, ADEN))
-#define adc_disable     (cbit(ADCSRA, ADEN))
+#define adc_enable                  (sbit(ADCSRA, ADEN))
+#define adc_disable                 (cbit(ADCSRA, ADEN))
+#define adc_start_conversion        (sbit(ADCSRA, ADSC))
+#define adc_auto_trigger_enable     (sbit(ADCSRA, ADATE))
+#define adc_clear_interrupt_flag    (sbit(ADCSRA, ADIF))   /* write logical 1 to clear */
 
 typedef struct ADC_ADC_Config
 {

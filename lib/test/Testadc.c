@@ -46,13 +46,59 @@ void test_adc_enable__should_set__bit(void)
   i = 0x0f;
   i |= (1 << ADEN);
   TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
-
 }
 
+void test_adc_disable__should_clear__bit(void)
+{
+  uint8_t i;
+  clr_byte(ADCSRA);
+  adc_enable;
+  i = (1 << ADEN);
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+  adc_disable;
+  i = 0x00;
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+  clr_byte(ADCSRA);
+}
+
+void test_adc_start_conversion_should_set_bit(void)
+{
+  uint8_t i;
+  clr_byte(ADCSRA);
+  adc_start_conversion;
+  i = (1<<ADSC);
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+  clr_byte(ADCSRA);
+}
+
+void test_adc_auto_trigger_enable_should_set_bit(void)
+{
+  uint8_t i;
+  clr_byte(ADCSRA);
+  adc_auto_trigger_enable;
+  i = (1 << ADATE);
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+  clr_byte(ADCSRA);
+}
+
+/* logical 1 to clear interrupt flag */
+void test_adc_clear_interrupt_flag_should_set_bit(void)
+{
+  uint8_t i;
+  clr_byte(ADCSRA);
+  adc_clear_interrupt_flag;
+  i = (1 << ADIF);
+  TEST_ASSERT_EQUAL_HEX8(i, ADCSRA);
+  clr_byte(ADCSRA);
+}
 
 int main(void)
 {
   UNITY_BEGIN();
   RUN_TEST(test_adc_enable__should_set__bit);
+  RUN_TEST(test_adc_disable__should_clear__bit);
+  RUN_TEST(test_adc_start_conversion_should_set_bit);
+  RUN_TEST(test_adc_auto_trigger_enable_should_set_bit);
+  RUN_TEST(test_adc_clear_interrupt_flag_should_set_bit);
   return UNITY_END();
 }
