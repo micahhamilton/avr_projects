@@ -36,7 +36,7 @@
 #define adc_start_conversion        (sbit(ADCSRA, ADSC))
 #define adc_auto_trigger_enable     (sbit(ADCSRA, ADATE))
 #define adc_clear_interrupt_flag    (sbit(ADCSRA, ADIF))   /* write logical 1 to clear */
-#define adc_interrupt_enable        (sbit(ADCSRA, ADIF))
+#define adc_interrupt_enable        (sbit(ADCSRA, ADIE))
 
 typedef struct ADC_ADC_Config
 {
