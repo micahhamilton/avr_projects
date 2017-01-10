@@ -3,21 +3,24 @@
 
 extern uint8_t adc_prescaler_select(uint8_t convert_spd)
 {
-  /*uint8_t i = 1, k = 2;
+  uint8_t i = 1, k = 2;
+  uint32_t x;
   if (convert_spd == ADC_FAST_CONVERSION)
-    while (F_CPU/k < ADC_MAX_FREQUENCY) {
+    while ((x = F_CPU/k) > ADC_MAX_FREQUENCY) {
       k = (k << 1);
       ++i;
     }
   else {
     i = 7;
     k = 128;
-    while (F_CPU/k > ADC_MIN_FREQUENCY) {
+    while ((x = F_CPU/k) < ADC_MIN_FREQUENCY) {
       k = (k >> 1);
       --i;
     }
-   }  */
-  return 7;
+  }
+  sbits(ADCSRA, i); 
+  return (uint8_t)((1.0/x * 13.0 * 1000000));
+ 
 }
 extern uint8_t ADC_initModule(const ADC_Config *config)
 {

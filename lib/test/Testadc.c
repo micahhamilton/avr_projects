@@ -104,8 +104,10 @@ void test_adc_interrupt_enable_should_set_bit(void)
 
 void test_adc_prescaler_select_should_return_minimum_sample_time(void)
 {
-  int t = adc_prescaler_select(0);
-  TEST_ASSERT_EQUAL_HEX8(255, t);
+  clr_byte(ADCSRA);
+  int t = adc_prescaler_select(ADC_FAST_CONVERSION);
+  TEST_ASSERT_EQUAL_HEX8(104, t);
+  TEST_ASSERT_EQUAL_HEX8(3, ADCSRA);
 }
 
 int main(void)
