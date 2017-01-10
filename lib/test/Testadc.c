@@ -102,6 +102,12 @@ void test_adc_interrupt_enable_should_set_bit(void)
   clr_byte(ADCSRA);
 }
 
+void test_adc_prescaler_select_should_return_minimum_sample_time(void)
+{
+  int t = adc_prescaler_select(0);
+  TEST_ASSERT_EQUAL_HEX8(255, t);
+}
+
 int main(void)
 {
   UNITY_BEGIN();
@@ -111,5 +117,6 @@ int main(void)
   RUN_TEST(test_adc_auto_trigger_enable_should_set_bit);
   RUN_TEST(test_adc_clear_interrupt_flag_should_set_bit);
   RUN_TEST(test_adc_interrupt_enable_should_set_bit);
+  RUN_TEST(test_adc_prescaler_select_should_return_minimum_sample_time);
   return UNITY_END();
 }

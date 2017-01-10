@@ -5,6 +5,9 @@
 #include <macro.h>
 #include "mock_avrio.h"
 
+/*############DELETEME##################*/
+#define F_CPU           8000000UL
+
 #define TRUE            0x01
 #define FALSE           0x00
 
@@ -29,6 +32,8 @@
 /* conversion speed for prescaler selection */
 #define ADC_FAST_CONVERSION            0x01
 #define ADC_SLOW_CONVERSION            0x00
+#define ADC_MAX_FREQUENCY              200000 
+#define ADC_MIN_FREQUENCY              50000 
 
 /* function like macros */
 #define adc_enable                  (sbit(ADCSRA, ADEN))
