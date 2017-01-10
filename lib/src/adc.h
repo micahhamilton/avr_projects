@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <macro.h>
+
 #include "mock_avrio.h"
 
 /*############DELETEME##################*/
