@@ -2,6 +2,7 @@
 #define ADC_H_
 
 #include <stdint.h>
+
 #include <macro.h>
 
 #include "mock_avrio.h"
@@ -31,10 +32,17 @@
 #define GND_READ        0x0F  /* 0V (GND) */
 
 /* conversion speed for prescaler selection */
-#define ADC_FAST_CONVERSION            0x01
-#define ADC_SLOW_CONVERSION            0x00
-#define ADC_MAX_FREQUENCY              200000 
-#define ADC_MIN_FREQUENCY              50000 
+#define ADC_FAST_CONVERSION             0x01
+#define ADC_SLOW_CONVERSION             0x00
+#define ADC_MAX_FREQUENCY               200000 
+#define ADC_MIN_PERIOD                  1.0 / ADC_MAX_FREQUENCY
+#define ADC_MIN_FREQUENCY               50000 
+#define ADC_MAX_PERIOD                  1.0 / ADC_MIN_FREQUENCY
+#define ADC_CYCLES_PER_CONVERSION       13
+
+/* prescaler defines */
+#define ADC_MAX_PRESCALER         0x07
+#define ADC_MIN_PRESCALER         0x01 
 
 /* function like macros */
 #define adc_enable                  (sbit(ADCSRA, ADEN))

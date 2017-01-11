@@ -107,7 +107,7 @@ void test_adc_prescaler_select_should_return_minimum_sample_time(void)
   clr_byte(ADCSRA);
   int t = adc_prescaler_select(ADC_FAST_CONVERSION);
   TEST_ASSERT_EQUAL_HEX8(104, t);
-  TEST_ASSERT_EQUAL_HEX8(3, ADCSRA);
+  TEST_ASSERT_EQUAL_HEX8(6, ADCSRA);
 }
 
 int main(void)
