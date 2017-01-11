@@ -7,9 +7,6 @@
 
 #include "mock_avrio.h"
 
-/*############DELETEME##################*/
-#define F_CPU           8000000UL
-
 #define TRUE            0x01
 #define FALSE           0x00
 
@@ -55,7 +52,19 @@
 typedef struct ADC_ADC_Config
 {
   uint8_t ref;
-} ADC_Config;
+  uint8_t fast_prescaler;
+  uint8_t slow_prescaler;
+  uint8_t fast_convert_us;
+  uint8_t slow_convert_us;
+
+}ADC_Config;
+
+/* adc_prescaler_frequency: finds prescaler vlaues for *
+ * fastest and slowest adc clk frequencies and calcs   *
+ * minimum conversion time (in microseconds) for fast  *
+ * and slow conversions stores result in ADC_Config    *
+ * struct                                              */
+extern void adc_prescaler_frequency(ADC_Config *config);
 
 /* adc_prescaler_select:                              *
  * selects prescaler for fast or slow conversion time *

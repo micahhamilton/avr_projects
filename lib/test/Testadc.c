@@ -33,6 +33,7 @@
 #include "mock_avrio.h"
 #include "macro.h"
 
+
 void test_adc_enable__should_set__bit(void)
 {
   uint8_t i;
@@ -107,7 +108,18 @@ void test_adc_prescaler_select_should_return_minimum_sample_time(void)
   clr_byte(ADCSRA);
   int t = adc_prescaler_select(ADC_FAST_CONVERSION);
   TEST_ASSERT_EQUAL_HEX8(104, t);
+
   TEST_ASSERT_EQUAL_HEX8(6, ADCSRA);
+}
+
+void test_adc_prescaler_frequency_should_set_prescale_params(void)
+{
+  ADC_Config config;
+  adc_prescaler_frequency(&config);
+  TEST_ASSERT_EQUAL_HEX8(0x06, config.fast_prescaler);
+  TEST_ASSERT_EQUAL_HEX8(0x07, config.slow_prescaler);
+  TEST_ASSERT_EQUAL_INT(208, config.slow_convert_us);
+  TEST_ASSERT_EQUAL_INT(104, config.fast_convert_us);
 }
 
 int main(void)
@@ -120,5 +132,6 @@ int main(void)
   RUN_TEST(test_adc_clear_interrupt_flag_should_set_bit);
   RUN_TEST(test_adc_interrupt_enable_should_set_bit);
   RUN_TEST(test_adc_prescaler_select_should_return_minimum_sample_time);
+  RUN_TEST(test_adc_prescaler_frequency_should_set_prescale_params);
   return UNITY_END();
 }
