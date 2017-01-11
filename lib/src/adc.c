@@ -1,8 +1,6 @@
 #include "adc.h"
 #include <stdio.h>
 
-/*############DELETEME##################*/
-#define F_CPU           8000000UL
 
 extern void adc_prescaler_frequency(ADC_Config *config)
 {
@@ -10,7 +8,7 @@ extern void adc_prescaler_frequency(ADC_Config *config)
   uint8_t k = (1 << ADC_MIN_PRESCALER);
 
   /* limit to valid cpu speeds for adc */
-  if (F_CPU <= 20000000 && F_CPU >= 100000) {
+  if (F_CPU <= ADC_MAX_CPU && F_CPU >= ADC_MIN_CPU) {
     while (F_CPU / k > ADC_MAX_FREQUENCY) {
       k = (k << 1);
       ++i;

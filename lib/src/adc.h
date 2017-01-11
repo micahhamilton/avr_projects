@@ -7,8 +7,15 @@
 
 #include "mock_avrio.h"
 
+/*############DELETEME##################*/
+#define F_CPU           100000UL
+
 #define TRUE            0x01
 #define FALSE           0x00
+
+/* ADC min and max cpu speeds (atmega 168/328) */
+#define ADC_MAX_CPU     20000000
+#define ADC_MIN_CPU     100000
 
 /* ADC reference voltage */
 #define VCC_REF         0x00
@@ -32,9 +39,7 @@
 #define ADC_FAST_CONVERSION             0x01
 #define ADC_SLOW_CONVERSION             0x00
 #define ADC_MAX_FREQUENCY               200000 
-#define ADC_MIN_PERIOD                  1.0 / ADC_MAX_FREQUENCY
 #define ADC_MIN_FREQUENCY               50000 
-#define ADC_MAX_PERIOD                  1.0 / ADC_MIN_FREQUENCY
 #define ADC_CYCLES_PER_CONVERSION       13
 
 /* prescaler defines */
