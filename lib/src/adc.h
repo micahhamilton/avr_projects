@@ -8,14 +8,14 @@
 #include "mock_avrio.h"
 
 /*############DELETEME##################*/
-#define F_CPU           100000UL
+#define F_CPU           8000000UL
 
 #define TRUE            0x01
 #define FALSE           0x00
 
 /* ADC min and max cpu speeds (atmega 168/328) */
-#define ADC_MAX_CPU     20000000
-#define ADC_MIN_CPU     100000
+#define ADC_MAX_CPU     20000000UL
+#define ADC_MIN_CPU     100000UL
 
 /* ADC reference voltage */
 #define VCC_REF         0x00
@@ -61,8 +61,8 @@ typedef struct ADC_ADC_Config
   uint8_t ref;
   uint8_t fast_prescaler;
   uint8_t slow_prescaler;
-  uint8_t fast_convert_us;
-  uint8_t slow_convert_us;
+  uint16_t fast_convert_us;
+  uint16_t slow_convert_us;
 
 }ADC_Config;
 

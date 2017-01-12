@@ -14,20 +14,20 @@ extern void adc_prescaler_frequency(ADC_Config *config)
       ++i;
     } 
     config->fast_prescaler = i;
-    config->fast_convert_us = (uint8_t)(((double)k / F_CPU) * ADC_CYCLES_PER_CONVERSION * 1000000);
+    config->fast_convert_us = (uint16_t)(((1.0*k) / F_CPU) * ADC_CYCLES_PER_CONVERSION * 1000000);
 
     /* find slowest frequency that fits adc frequency tolerance */  
     i = ADC_MAX_PRESCALER;
-    k = 1 << ADC_MAX_PRESCALER;
+    k = (1 << ADC_MAX_PRESCALER);
     while (F_CPU / k < ADC_MIN_FREQUENCY) {
       k = (k >> 1);
       --i;
     }
     config->slow_prescaler = i;
-    config->slow_convert_us = (uint8_t)(((double)k / F_CPU) * ADC_CYCLES_PER_CONVERSION * 1000000);
-    } else {
+    config->slow_convert_us = (uint16_t)(((1.0*k) / F_CPU) * ADC_CYCLES_PER_CONVERSION * 1000000);
+  } else {
     config->slow_prescaler = config->fast_prescaler =  ADC_MAX_PRESCALER;
-    config->slow_convert_us = config->fast_convert_us = ( uint8_t)(((double)ADC_MAX_PRESCALER / F_CPU) * ADC_CYCLES_PER_CONVERSION * 1000000);
+    config->slow_convert_us = config->fast_convert_us = ( uint16_t)(((1.0*ADC_MAX_PRESCALER) / F_CPU) * ADC_CYCLES_PER_CONVERSION * 1000000);
   }
 }
 
