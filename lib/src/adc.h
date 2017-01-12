@@ -18,9 +18,9 @@
 #define ADC_MIN_CPU     100000UL
 
 /* ADC reference voltage */
-#define VCC_REF         0x00
-#define AVCC_REF        0x01
-#define INTERNAL_REF    0x02   /* internal 1.1 volt ref */
+#define ADC_AREF          0x00
+#define ADC_VCC_REF       0x40
+#define ADC_INTERNAL_REF  0xC0   /* internal 1.1 volt ref */
 
 /* ADC channel */
 #define ADC_CH0         0x00
@@ -51,10 +51,15 @@
 #define adc_disable                       (cbit(ADCSRA, ADEN))
 #define adc_start_conversion              (sbit(ADCSRA, ADSC))
 #define adc_auto_trigger_enable           (sbit(ADCSRA, ADATE))
+#define adc_auto_trigger_disable          (cbit(ADCSRA, ADATE))
 #define adc_clear_interrupt_flag          (sbit(ADCSRA, ADIF))   /* write logical 1 to clear */
 #define adc_interrupt_enable              (sbit(ADCSRA, ADIE))
-/* TODO test adc_set_fast_convert */
-#define adc_set_fast_convert(adc_config)  (adc_config = ADC_FAST_CONVERSION)   
+#define adc_interrupt_disable             (cbit(ADCSRA, ADIE))
+#define adc_clear_ref                     (ADMUX &= ~((1<<REFS1)|(1<<REFS0)))
+#define adc_set_ref(ref)                  (ADMUX |= ref)
+#define adc_result_right_adj              (cbit(ADMUX,ADLAR))
+#define adc_result_left_adj               (sbit(ADMUX, ADLAR))
+#define adc_set_prescaler(k)              (ADMUX |= k)
 
 typedef struct ADC_ADC_Config
 {
@@ -63,7 +68,7 @@ typedef struct ADC_ADC_Config
   uint8_t slow_prescaler;
   uint16_t fast_convert_us;
   uint16_t slow_convert_us;
-
+  uint8_t speed;
 }ADC_Config;
 
 /* adc_prescaler_frequency: finds prescaler vlaues for *
@@ -71,7 +76,9 @@ typedef struct ADC_ADC_Config
  * minimum conversion time (in microseconds) for fast  *
  * and slow conversions stores result in ADC_Config    *
  * struct                                              */
-extern void adc_prescaler_frequency(ADC_Config *config);
+extern void adc_calculate_prescaler(ADC_Config *config);
+
+extern void ADC_Config_default(ADC_Config *config);
 
 /* adc_prescaler_select:                              *
  * selects prescaler for fast or slow conversion time *

@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 
-extern void adc_prescaler_frequency(ADC_Config *config)
+extern void adc_calculate_prescaler(ADC_Config *config)
 {
   uint8_t i = ADC_MIN_PRESCALER;
   uint8_t k = (1 << ADC_MIN_PRESCALER);
@@ -31,6 +31,18 @@ extern void adc_prescaler_frequency(ADC_Config *config)
   }
 }
 
+extern void ADC_Config_default(ADC_Config *config)
+{
+  adc_disable;
+  adc_clear_ref;
+  adc_result_right_adj;
+  adc_auto_trigger_disable;
+  adc_interrupt_disable;
+  config->ref = adc_set_ref(ADC_VCC_REF);
+  config->speed = ADC_SLOW_CONVERSION;
+  adc_calculate_prescaler(config);
+  adc_set_prescaler(config->slow_prescaler);
+} 
 extern uint8_t adc_prescaler_select(uint8_t convert_spd)
 {
   /* limit to valid cpu speeds for adc */

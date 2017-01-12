@@ -112,7 +112,7 @@ void test_adc_prescaler_select_should_return_minimum_sample_time(void)
   TEST_ASSERT_EQUAL_HEX8(6, ADCSRA);
 }
 
-void test_adc_prescaler_frequency_should_set_prescale_params(void)
+void test_adc_calculate_prescaler_should_set_prescale_params(void)
 {
   /******************* BELOW VALIDATED USING EXTERNAL PROGRAM ***********************/
   /*   valid between max and min cpu frequencys for ADC 100,000 - 20,000,000 Hz     */
@@ -140,13 +140,20 @@ void test_adc_prescaler_frequency_should_set_prescale_params(void)
   /******************** ABOVE VALIDATED USING EXTERNAL PROGRAM ***********************/  
 
   ADC_Config config;
-  adc_prescaler_frequency(&config);
+  adc_calculate_prescaler(&config);
   TEST_ASSERT_EQUAL_HEX8(fps, config.fast_prescaler);
   TEST_ASSERT_EQUAL_HEX8(sps, config.slow_prescaler);
   TEST_ASSERT_EQUAL_INT(sct, config.slow_convert_us);
   TEST_ASSERT_EQUAL_INT(fct, config.fast_convert_us);
 }
 
+void test_ADC_Config_default_should_set_default_ADC_params(void)
+{
+  clr_byte(ADMUX);
+  ADC_Config config;  
+  ADC_Config_default(&config);
+  TEST_ASSERT_EQUAL_HEX8((ADMUX |= ADC_VCC_REF), config.ref);
+}
 int main(void)
 {
   UNITY_BEGIN();
@@ -158,6 +165,7 @@ int main(void)
   RUN_TEST(test_adc_interrupt_enable_should_set_bit);
   //RUN_TEST(test_adc_prescaler_select_should_return_minimum_sample_time);
   if(F_CPU <= ADC_MAX_CPU && F_CPU >= ADC_MIN_CPU)
-    RUN_TEST(test_adc_prescaler_frequency_should_set_prescale_params);
+    RUN_TEST(test_adc_calculate_prescaler_should_set_prescale_params);
+  RUN_TEST(test_ADC_Config_default_should_set_default_ADC_params);
   return UNITY_END();
 }
