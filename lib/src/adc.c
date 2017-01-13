@@ -31,6 +31,9 @@ extern void adc_calculate_prescaler(ADC_Config *config)
   }
 }
 
+/* TODO this file should not set registers, only  *
+ * store configuration info. seperate function to *
+ * configure registers                            */
 extern void adc_config_default(ADC_Config *config)
 {
   adc_disable;
