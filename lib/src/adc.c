@@ -36,20 +36,38 @@ extern void adc_config_default_params(ADC_Config *config)
   config->ref = ADC_VCC_REF;
   config->result_alignment = ADC_RIGHT_ADJUST_RESULT;
   config->speed = ADC_SLOW_CONVERSION;
+  config->auto_trigger = FALSE;
+  config->interrupt_driven = FALSE;
   adc_calculate_prescaler(config);
 } 
 
-extern void adc_config(ADC_Config *config)
+extern void adc_init_module(const ADC_Config *config)
 {
   adc_disable;
   adc_clear_ref;
-  adc_result_right_adj;
-  adc_auto_trigger_disable;
-  adc_interrupt_disable;
-  config->ref = adc_set_ref(ADC_VCC_REF);
-  config->speed = ADC_SLOW_CONVERSION;
-  adc_calculate_prescaler(config);
-  adc_set_prescaler(config->slow_prescaler);
+  adc_clear_prescaler;
+
+  adc_set_ref(config->ref);
+
+  if (config->result_alignment == ADC_RIGHT_ADJUST_RESULT)
+    adc_result_right_adj;
+  else
+    adc_result_left_adj;
+
+  if (ADC_FAST_CONVERSION)
+    adc_set_prescaler(config->fast_prescaler);
+  else
+    adc_set_prescaler(config->slow_prescaler);
+
+  if (config->auto_trigger)
+    adc_auto_trigger_enable;
+  else
+    adc_auto_trigger_disable;
+
+  if (config->interrupt_driven)
+    adc_interrupt_enable;
+  else
+    adc_interrupt_disable;
 } 
 
 extern uint8_t adc_prescaler_select(uint8_t convert_spd)
@@ -86,18 +104,4 @@ extern uint8_t adc_prescaler_select(uint8_t convert_spd)
     adc_disable;
     return -1;
   }
-}
-
-extern uint8_t ADC_initModule(const ADC_Config *config)
-{
-  switch (config->ref) {
-    case 0x00:
-      printf("you are in my mode\n");
-      return 0x00;
-    case 0x01:
-      printf("you ain't in my mode\n");
-      return 0x01;
-  }
-
-  return 0x01;
 }

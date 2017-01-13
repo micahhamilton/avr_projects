@@ -63,17 +63,20 @@
 #define adc_set_ref(ref)                  (ADMUX |= ref)
 #define adc_result_right_adj              (cbit(ADMUX,ADLAR))
 #define adc_result_left_adj               (sbit(ADMUX, ADLAR))
+#define adc_clear_prescaler               (ADCSRA &= ~((1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)))
 #define adc_set_prescaler(k)              (ADCSRA |= k)
 
 typedef struct ADC_ADC_Config
 {
   uint8_t ref;
   uint8_t result_alignment;
+  uint8_t speed;
   uint8_t fast_prescaler;
   uint8_t slow_prescaler;
   uint16_t fast_convert_us;
   uint16_t slow_convert_us;
-  uint8_t speed;
+  uint8_t auto_trigger;
+  uint8_t interrupt_driven;
 }ADC_Config;
 
 /* adc_prescaler_frequency: finds prescaler vlaues for *
@@ -85,7 +88,7 @@ extern void adc_calculate_prescaler(ADC_Config *config);
 
 extern void adc_config_default_params(ADC_Config *config);
 
-extern void adc_config(ADC_Config *config);
+extern void adc_init_module (const ADC_Config *config);
 
 /* adc_prescaler_select:                              *
  * selects prescaler for fast or slow conversion time *
@@ -95,6 +98,5 @@ extern void adc_config(ADC_Config *config);
  * returns: approx. minimum conversion time in usec.  */
 extern uint8_t adc_prescaler_select(uint8_t convert_spd);
 
-extern uint8_t ADC_initModule (const ADC_Config *config);
 
 #endif
