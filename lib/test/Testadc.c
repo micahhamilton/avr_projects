@@ -147,12 +147,14 @@ void test_adc_calculate_prescaler_should_set_prescale_params(void)
   TEST_ASSERT_EQUAL_INT(fct, config.fast_convert_us);
 }
 
-void test_ADC_Config_default_should_set_default_ADC_params(void)
+void test_adc_config_default_should_set_default_ADC_params(void)
 {
   clr_byte(ADMUX);
+  clr_byte(ADCSRA);
   ADC_Config config;  
-  ADC_Config_default(&config);
+  adc_config_default(&config);
   TEST_ASSERT_EQUAL_HEX8((ADMUX |= ADC_VCC_REF), config.ref);
+  TEST_ASSERT_EQUAL_HEX8(ADCSRA, config.slow_prescaler);
 }
 int main(void)
 {
@@ -166,6 +168,6 @@ int main(void)
   //RUN_TEST(test_adc_prescaler_select_should_return_minimum_sample_time);
   if(F_CPU <= ADC_MAX_CPU && F_CPU >= ADC_MIN_CPU)
     RUN_TEST(test_adc_calculate_prescaler_should_set_prescale_params);
-  RUN_TEST(test_ADC_Config_default_should_set_default_ADC_params);
+  RUN_TEST(test_adc_config_default_should_set_default_ADC_params);
   return UNITY_END();
 }

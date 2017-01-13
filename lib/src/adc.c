@@ -31,7 +31,7 @@ extern void adc_calculate_prescaler(ADC_Config *config)
   }
 }
 
-extern void ADC_Config_default(ADC_Config *config)
+extern void adc_config_default(ADC_Config *config)
 {
   adc_disable;
   adc_clear_ref;
@@ -43,6 +43,7 @@ extern void ADC_Config_default(ADC_Config *config)
   adc_calculate_prescaler(config);
   adc_set_prescaler(config->slow_prescaler);
 } 
+
 extern uint8_t adc_prescaler_select(uint8_t convert_spd)
 {
   /* limit to valid cpu speeds for adc */

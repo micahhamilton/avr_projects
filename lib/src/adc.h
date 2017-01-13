@@ -59,7 +59,7 @@
 #define adc_set_ref(ref)                  (ADMUX |= ref)
 #define adc_result_right_adj              (cbit(ADMUX,ADLAR))
 #define adc_result_left_adj               (sbit(ADMUX, ADLAR))
-#define adc_set_prescaler(k)              (ADMUX |= k)
+#define adc_set_prescaler(k)              (ADCSRA |= k)
 
 typedef struct ADC_ADC_Config
 {
@@ -78,7 +78,7 @@ typedef struct ADC_ADC_Config
  * struct                                              */
 extern void adc_calculate_prescaler(ADC_Config *config);
 
-extern void ADC_Config_default(ADC_Config *config);
+extern void adc_config_default(ADC_Config *config);
 
 /* adc_prescaler_select:                              *
  * selects prescaler for fast or slow conversion time *
