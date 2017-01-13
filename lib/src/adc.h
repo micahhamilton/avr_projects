@@ -80,7 +80,7 @@ typedef struct ADC_ADC_Config
   uint8_t interrupt_driven;
 }ADC_Config;
 
-/* adc_prescaler_frequency: finds prescaler vlaues for *
+/* adc_calculate_prescaler: finds prescaler vlaues for *
  * fastest and slowest adc clk frequencies and calcs   *
  * minimum conversion time (in microseconds) for fast  *
  * and slow conversions stores result in ADC_Config    *
@@ -90,12 +90,5 @@ extern void adc_calculate_prescaler(ADC_Config *config);
 extern void adc_config_default_params(ADC_Config *config);
 
 extern void adc_init_module (const ADC_Config *config);
-
-/* adc_prescaler_select:                              *
- * selects prescaler for fast or slow conversion time *
- * slow is better for resolution... assumes F_CPU is  *
- * defined                                            *
- * choose: ADC_FAST_CONVERSION or ADC_SLOW_CONVERSION *
- * returns: approx. minimum conversion time in usec.  */
 
 #endif
