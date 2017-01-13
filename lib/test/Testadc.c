@@ -103,15 +103,6 @@ void test_adc_interrupt_enable_should_set_bit(void)
   clr_byte(ADCSRA);
 }
 
-void test_adc_prescaler_select_should_return_minimum_sample_time(void)
-{
-  clr_byte(ADCSRA);
-  int t = adc_prescaler_select(ADC_FAST_CONVERSION);
-  TEST_ASSERT_EQUAL_HEX8(104, t);
-
-  TEST_ASSERT_EQUAL_HEX8(6, ADCSRA);
-}
-
 void test_adc_calculate_prescaler_should_set_prescale_params(void)
 {
   /******************* BELOW VALIDATED USING EXTERNAL PROGRAM ***********************/
@@ -160,15 +151,16 @@ void test_adc_config_default_params_should_set_default_adc_params(void)
   //TEST_ASSERT_EQUAL_HEX8(ADCSRA, config.slow_prescaler);
 }
 
-/*void test_adc_config_default_params_should_set_default_adc_params(void)
+void test_adc_init_module_should_set_adc_register_using_default_values(void)
 {
-  clr_byte(ADMUX);
-  clr_byte(ADCSRA);
+  ADMUX = 0x00;
+  ADCSRA = 0x00;
   ADC_Config config;  
   adc_config_default_params(&config);
-  TEST_ASSERT_EQUAL_HEX8((ADMUX |= ADC_VCC_REF), config.ref);
-  TEST_ASSERT_EQUAL_HEX8(ADCSRA, config.slow_prescaler);
-} */
+  adc_init_module(&config);
+  TEST_ASSERT_EQUAL_HEX8(0x40, ADMUX);
+  TEST_ASSERT_EQUAL_HEX8(0x87, ADCSRA);
+}
 
 int main(void)
 {
@@ -179,9 +171,9 @@ int main(void)
   RUN_TEST(test_adc_auto_trigger_enable_should_set_bit);
   RUN_TEST(test_adc_clear_interrupt_flag_should_set_bit);
   RUN_TEST(test_adc_interrupt_enable_should_set_bit);
-  //RUN_TEST(test_adc_prescaler_select_should_return_minimum_sample_time);
   if(F_CPU <= ADC_MAX_CPU && F_CPU >= ADC_MIN_CPU)
     RUN_TEST(test_adc_calculate_prescaler_should_set_prescale_params);
   RUN_TEST(test_adc_config_default_params_should_set_default_adc_params);
+  RUN_TEST(test_adc_init_module_should_set_adc_register_using_default_values);
   return UNITY_END();
 }

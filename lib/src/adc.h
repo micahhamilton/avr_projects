@@ -23,8 +23,8 @@
 #define ADC_INTERNAL_REF  0xC0   /* internal 1.1 volt ref */
 
 /* ADC result left/right adjust */
-#define ADC_RIGHT_ADJUST_RESULT         ~(1 << ADLAR)
-#define ADC_LEFT_ADJUST_RESULT          (1<<ADLAR)
+#define ADC_RIGHT_ADJUST_RESULT         0 
+#define ADC_LEFT_ADJUST_RESULT          1
 
 /* ADC channel */
 #define ADC_CH0         0x00
@@ -53,6 +53,7 @@
 /* function like macros */
 #define adc_enable                        (sbit(ADCSRA, ADEN))
 #define adc_disable                       (cbit(ADCSRA, ADEN))
+#define adc_power_reduction(t_or_f)       (t_or_f ? sbit(PRR, PRADC) : cbit(PRR, PRADC))
 #define adc_start_conversion              (sbit(ADCSRA, ADSC))
 #define adc_auto_trigger_enable           (sbit(ADCSRA, ADATE))
 #define adc_auto_trigger_disable          (cbit(ADCSRA, ADATE))
@@ -96,7 +97,5 @@ extern void adc_init_module (const ADC_Config *config);
  * defined                                            *
  * choose: ADC_FAST_CONVERSION or ADC_SLOW_CONVERSION *
  * returns: approx. minimum conversion time in usec.  */
-extern uint8_t adc_prescaler_select(uint8_t convert_spd);
-
 
 #endif

@@ -1,9 +1,22 @@
+/* PRR - Power Reduction Register */
+unsigned char *prr;
+#define PRR (*(volatile unsigned char *)&prr)
+#define PRTWI       0x07
+#define PRTIM2      0x06
+#define PRTIM0      0x05
+
+#define PRTIM1      0x03
+#define PRSPI       0x02
+#define PRUSART0    0x01
+#define PRADC       0x00
+
 /* ADMUX – ADC Multiplexer Selection Register */
 unsigned char *admux;
 #define ADMUX (*(volatile unsigned char *)&admux)
 #define REFS1       0x07
 #define REFS0       0x06
 #define ADLAR       0x05
+
 #define MUX3        0x03
 #define MUX2        0x02
 #define MUX1        0x01
