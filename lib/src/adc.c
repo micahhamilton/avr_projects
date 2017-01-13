@@ -31,10 +31,15 @@ extern void adc_calculate_prescaler(ADC_Config *config)
   }
 }
 
-/* TODO this file should not set registers, only  *
- * store configuration info. seperate function to *
- * configure registers                            */
-extern void adc_config_default(ADC_Config *config)
+extern void adc_config_default_params(ADC_Config *config)
+{
+  config->ref = ADC_VCC_REF;
+  config->result_alignment = ADC_RIGHT_ADJUST_RESULT;
+  config->speed = ADC_SLOW_CONVERSION;
+  adc_calculate_prescaler(config);
+} 
+
+extern void adc_config(ADC_Config *config)
 {
   adc_disable;
   adc_clear_ref;

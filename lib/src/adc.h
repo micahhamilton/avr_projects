@@ -22,6 +22,10 @@
 #define ADC_VCC_REF       0x40
 #define ADC_INTERNAL_REF  0xC0   /* internal 1.1 volt ref */
 
+/* ADC result left/right adjust */
+#define ADC_RIGHT_ADJUST_RESULT         ~(1 << ADLAR)
+#define ADC_LEFT_ADJUST_RESULT          (1<<ADLAR)
+
 /* ADC channel */
 #define ADC_CH0         0x00
 #define ADC_CH1         0x01
@@ -64,6 +68,7 @@
 typedef struct ADC_ADC_Config
 {
   uint8_t ref;
+  uint8_t result_alignment;
   uint8_t fast_prescaler;
   uint8_t slow_prescaler;
   uint16_t fast_convert_us;
@@ -78,7 +83,9 @@ typedef struct ADC_ADC_Config
  * struct                                              */
 extern void adc_calculate_prescaler(ADC_Config *config);
 
-extern void adc_config_default(ADC_Config *config);
+extern void adc_config_default_params(ADC_Config *config);
+
+extern void adc_config(ADC_Config *config);
 
 /* adc_prescaler_select:                              *
  * selects prescaler for fast or slow conversion time *
