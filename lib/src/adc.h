@@ -50,6 +50,16 @@
 #define ADC_MAX_PRESCALER         0x07
 #define ADC_MIN_PRESCALER         0x01 
 
+/* adc auto trigger sources */
+#define ADC_FREE_RUN                      0x00
+#define ADC_ANALOG_COMPARE                0x01
+#define ADC_EXTERNAL_INTERRUPT_0          0x02
+#define ADC_TIMER0_COMPARE_A              0x03
+#define ADC_TIMER0_OVERFLOW               0x04
+#define ADC_TIMER1_COMPARE_B              0x05
+#define ADC_TIMER1_OVERFLOW               0x06
+#define ADC_TIMER1_CAPTURE_EVENT          0x07 
+
 /* function like macros */
 #define adc_enable                        (sbit(ADCSRA, ADEN))
 #define adc_disable                       (cbit(ADCSRA, ADEN))
@@ -65,7 +75,9 @@
 #define adc_result_right_adj              (cbit(ADMUX,ADLAR))
 #define adc_result_left_adj               (sbit(ADMUX, ADLAR))
 #define adc_clear_prescaler               (ADCSRA &= ~((1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)))
-#define adc_set_prescaler(k)              (ADCSRA |= k)
+#define adc_set_prescaler(mask)              (ADCSRA |= mask)
+#define adc_clear_auto_trigger_source         (ADCSRB &= ~((1<<ADTS2) | (1<<ADTS1) | (1<<ADTS0)))
+#define adc_set_auto_trigger_source(mask)     (ADCSRB |= mask)
 
 typedef struct ADC_ADC_Config
 {
@@ -77,7 +89,8 @@ typedef struct ADC_ADC_Config
   uint16_t fast_convert_us;
   uint16_t slow_convert_us;
   uint8_t auto_trigger;
-  uint8_t interrupt_driven;
+  uint8_t interrupt_on_complete;
+  uint8_t auto_trigger_source;
 }ADC_Config;
 
 /* adc_calculate_prescaler: finds prescaler vlaues for *

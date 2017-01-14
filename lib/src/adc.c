@@ -35,12 +35,9 @@ extern void adc_config_default_params(ADC_Config *config)
   config->ref = ADC_VCC_REF;
   config->result_alignment = ADC_RIGHT_ADJUST_RESULT;
   config->speed = ADC_SLOW_CONVERSION;
-  config->fast_prescaler = 0x00;
-  config->slow_prescaler = 0x00;
-  config->fast_convert_us = 0x0000;
-  config->slow_convert_us = 0x0000;
   config->auto_trigger = FALSE;
-  config->interrupt_driven = FALSE;
+  config->interrupt_on_complete = FALSE;
+  config->auto_trigger_source = 0x00;
   adc_calculate_prescaler(config);
 } 
 
@@ -50,6 +47,7 @@ extern void adc_init_module(const ADC_Config *config)
   adc_disable;
   adc_clear_ref;
   adc_clear_prescaler;
+  adc_clear_auto_trigger_source;
 
   adc_set_ref(config->ref);
 
@@ -68,10 +66,19 @@ extern void adc_init_module(const ADC_Config *config)
   else
     adc_auto_trigger_disable;
 
-  if (config->interrupt_driven)
+  if (config->interrupt_on_complete)
     adc_interrupt_enable;
   else
     adc_interrupt_disable;
+
+  if (config->auto_trigger) {
+    adc_auto_trigger_enable;
+    adc_set_auto_trigger_source(config->auto_trigger_source);
+  } else {
+    adc_auto_trigger_disable;
+    adc_clear_auto_trigger_source;
+  }
+
 
   adc_enable;
 } 

@@ -34,3 +34,26 @@ unsigned char *adcsra;
 #define ADPS1       0x01
 #define ADPS0       0x00
 
+/* ADCSRB – ADC Control and Status Register B */
+unsigned char *adcsrb;
+#define ADCSRB (*(volatile unsigned char *)&adcsrb)
+
+#define ACME        0x06
+
+
+
+#define ADTS2       0x02
+#define ADTS1       0x01
+#define ADTS0       0x00
+
+/* DIDR0 – Digital Input Disable Register 0 */
+
+
+#define ADC5D       0x05
+#define ADC4D       0x04
+#define ADC3D       0x03
+#define ADC2D       0x02
+#define ADC1D       0x01
+#define ADC0D       0x00
+
+

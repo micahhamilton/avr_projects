@@ -153,13 +153,20 @@ void test_adc_config_default_params_should_set_default_adc_params(void)
 
 void test_adc_init_module_should_set_adc_register_using_default_values(void)
 {
+  PRR = 0;
   ADMUX = 0x00;
   ADCSRA = 0x00;
   ADC_Config config;  
   adc_config_default_params(&config);
   adc_init_module(&config);
-  TEST_ASSERT_EQUAL_HEX8(0x40, ADMUX);
-  TEST_ASSERT_EQUAL_HEX8(0x87, ADCSRA);
+  TEST_ASSERT_EQUAL_HEX8(0x00, PRR);
+  TEST_ASSERT_EQUAL_HEX8(config.ref, ADMUX);
+  /* prescaler is frequency dependant and is tested *
+   * as part of adc caclulate prescaler function    *
+   * mask prescaler bits to zero for this test      */
+  ADCSRA &= ~((1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0));
+  TEST_ASSERT_EQUAL_HEX8((1<<ADEN), ADCSRA);
+  TEST_ASSERT_EQUAL_HEX8(0x00, ADCSRB);
 }
 
 int main(void)
