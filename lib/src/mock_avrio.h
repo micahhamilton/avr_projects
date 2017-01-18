@@ -1,3 +1,31 @@
+/* SREG – AVR Status Register */
+unsigned char *sreg;
+#define SREG (*(volatile unsigned char *)&sreg)
+#define I           0x07        /* Global Interrupt Enable */
+#define T           0x06        /* Bit Copy Storage */
+#define H           0x05        /* Half Carry Flag */
+#define S           0x04        /* Sign Bit */
+#define V           0x03        /* Two's Complement Overflow Flag */
+#define N           0x02        /* Negative Flag */
+#define Z           0x01        /* Zero Flag */
+#define C           0x00        /* Carry Flag */
+
+/* TODO Clock Suff Here */
+
+
+
+/* SMCR - Sleep Mode Control Register */
+unsigned char *smcr;
+#define SMCR (*(volatile unsigned char *)&smcr)
+
+
+
+
+#define SM2         0x03
+#define SM1         0x02
+#define SM0         0x01
+#define SE          0x00
+
 /* PRR - Power Reduction Register */
 unsigned char *prr;
 #define PRR (*(volatile unsigned char *)&prr)
