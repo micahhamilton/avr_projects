@@ -10,6 +10,80 @@ unsigned char *sreg;
 #define Z           0x01        /* Zero Flag */
 #define C           0x00        /* Carry Flag */
 
+/* SPH and SPL – Stack Pointer High and Stack Pointer Low Register */
+unsigned char *sph;
+#define SPH (*(volatile unsigned char *)&sph)
+#define SP15        0x07
+#define SP14        0x06
+#define SP13        0x05
+#define SP12        0x04
+#define SP11        0x03
+#define SP10        0x02
+#define SP9         0x01
+#define SP8         0x00
+
+unsigned char *spl;
+#define SPL (*(volatile unsigned char *)&spl)
+#define SP7         0x07
+#define SP6         0x06
+#define SP5         0x05
+#define SP4         0x04
+#define SP3         0x03
+#define SP2         0x02
+#define SP1         0x01
+#define SP0         0x00
+
+/* EEARH and EEARL – The EEPROM Address Register */
+unsigned char *eearh;
+#define EEARH (*(volatile unsigned char *)&eearh)
+
+
+
+
+
+
+#define EEAR9       0x01
+#define EEAR8       0x00
+
+unsigned char *eearl;
+#define EEARL (*(volatile unsigned char *)&eearl)
+#define EEAR7       0x07
+#define EEAR6       0x06
+#define EEAR5       0x05
+#define EEAR4       0x04
+#define EEAR3       0x03
+#define EEAR2       0x02
+#define EEAR1       0x01
+#define EEAR0       0x00
+
+/* EEDR – The EEPROM Data Register */
+unsigned char *eedr;
+#define EEDR (*(volatile unsigned char *)&eedr)
+
+/* EECR – The EEPROM Control Register */
+unsigned char *eecr;
+#define EECR (*(volatile unsigned char *)&EECR)
+
+
+#define EEPM1       0x05   /* programming mode bit-1 */
+#define EEPM0       0x04   /* programming mode bit-0 */
+#define EERIE       0x03   /* EEPROM Ready Interrupt Enable */
+#define EEMPE       0x02   /* EEPROM Master Write Enable */
+#define EEPE        0x01   /* EEPROM Write Enable */
+#define EERE        0x00   /* EEPROM Read Enable */
+
+/* GPIOR2 – General Purpose I/O Register 2 */
+unsigned char *gpior2;
+#define GPIOR2 (*(volatile unsigned char *)&gpior2)
+
+/* GPIOR1 – General Purpose I/O Register 1 */
+unsigned char *gpior1;
+#define GPIOR1 (*(volatile unsigned char *)&gpior1)
+
+/* GPIOR0 – General Purpose I/O Register 0 */
+unsigned char *gpior0;
+#define GPIOR0 (*(volatile unsigned char *)&gpior0)
+
 /* TODO Clock Suff Here */
 
 
