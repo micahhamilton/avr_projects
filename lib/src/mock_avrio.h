@@ -84,9 +84,33 @@ unsigned char *gpior1;
 unsigned char *gpior0;
 #define GPIOR0 (*(volatile unsigned char *)&gpior0)
 
-/* TODO Clock Suff Here */
+/* System Clock */
+
+/* OSCCAL – Oscillator Calibration Register */
+unsigned char *osccal;
+#define OSCCAL (*(volatile unsigned char *)&osccal)
+#define CAL7        0x07
+#define CAL6        0x06
+#define CAL5        0x05
+#define CAL4        0x04
+#define CAL3        0x03
+#define CAL2        0x02
+#define CAL1        0x01
+#define CAL0        0x00
+
+/* CLKPR – Clock Prescale Register */
+unsigned char *clkpr;
+#define CLKPR (*(volatile unsigned char *)&clkpr)
+#define CLKPCE      0x07    /* Clock Prescaler Change Enable */
 
 
+
+#define CLKPS3      0x03    /* Clock Prescaler Select Bits 3 */
+#define CLKPS2      0x02    /* Clock Prescaler Select Bits 2 */
+#define CLKPS1      0x01    /* Clock Prescaler Select Bits 1 */
+#define CLKPS0      0x00    /* Clock Prescaler Select Bits 0 */
+
+/* Power Management and Sleep Modes */
 
 /* SMCR - Sleep Mode Control Register */
 unsigned char *smcr;
@@ -95,22 +119,62 @@ unsigned char *smcr;
 
 
 
-#define SM2         0x03
-#define SM1         0x02
-#define SM0         0x01
-#define SE          0x00
+#define SM2         0x03   /* Sleep Mode Select Bit 2 */
+#define SM1         0x02   /* Sleep Mode Select Bit 1 */
+#define SM0         0x01   /* Sleep Mode Select Bit 0 */
+#define SE          0x00   /* Sleep Enable */
+
+/* MCUCR – MCU Control Register */
+unsigned char *mcucr;
+#define MCUCR (*(volatile unsigned char *)&mcucr)
+
+#define BODS        0x06   /* BOD Sleep */
+#define BODSE       0x05   /* BOD Sleep Enable */
+#define PUD         0x04   /* ??? */
+
+
+#define IVSEL       0x01   /* ??? */
+#define IVCE        0x00   /* ??? */
 
 /* PRR - Power Reduction Register */
 unsigned char *prr;
 #define PRR (*(volatile unsigned char *)&prr)
-#define PRTWI       0x07
-#define PRTIM2      0x06
-#define PRTIM0      0x05
+#define PRTWI       0x07   /* Power Reduction TWI */
+#define PRTIM2      0x06   /* Power Reduction Timer/Counter2 */
+#define PRTIM0      0x05   /* Power Reduction Timer/Counter0 */
 
-#define PRTIM1      0x03
-#define PRSPI       0x02
-#define PRUSART0    0x01
-#define PRADC       0x00
+#define PRTIM1      0x03   /* Power Reduction Timer/Counter1 */
+#define PRSPI       0x02   /* Power Reduction Serial Peripheral Interface */
+#define PRUSART0    0x01   /* Power Reduction USART0 */
+#define PRADC       0x00   /* Power Reduction ADC */
+
+/* Reset Status */
+
+/* MCUSR – MCU Status Register */
+unsigned char *mcusr;
+#define MCUSR (*(volatile unsigned char *)&mcusr)
+
+
+
+
+#define WDRF        0x03   /* Watchdog System Reset Flag */
+#define BORF        0x02   /* Brown-out Reset Flag */
+#define EXTRF       0x01   /* External Reset Flag */
+#define PORF        0x00   /* Power-on Reset Flag */
+
+/* WDTCSR – Watchdog Timer Control Register */
+unsigned char *wdtcsr;
+#define WDTCSR (*(volatile unsigned char *)&wdtcsr)
+#define WDIF        0x07   /* Watchdog Interrupt Flag */
+#define WDIE        0x06   /* Watchdog Interrupt Enable */
+#define WDP3        0x05   /* Watchdog Timer Prescaler 3 */
+#define WDCE        0x04   /* Watchdog Change Enable */
+#define WDE         0x03   /* Watchdog System Reset Enable */
+#define WDP2        0x02   /* Watchdog Timer Prescaler 2 */
+#define WDP1        0x01   /* Watchdog Timer Prescaler 1 */
+#define WDP0        0x00   /* Watchdog Timer Prescaler 0 */
+
+/* TODO Interrupt Registers */
 
 /* ADMUX – ADC Multiplexer Selection Register */
 unsigned char *admux;
